@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css" integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
+        crossorigin="" />
+    <link rel="stylesheet" href="localização.css">
+    <title>MedeFit</title>
+</head>
+
+<body>
+
+    <h1>Localização</h1>
+
+    <aside>
+        <div id="barra">
+            <div class="barrinha"></div>
+            <div class="barrinha"></div>
+            <div class="barrinha"></div>
+        </div>
+        <h2 class="invisivel">Acesse aqui suas opções</h2>
+        <nav class="invisivel">
+            <a href="temp.html">Temperaturas</a>
+            <a href="agua.html">Consumo de água</a>
+            <a href="localizaçao.html">Localização</a>
+            <a href="dados.html">Meus dados coletatos</a>
+        </nav>
+    </aside>
+    <div id="mapa"></div>
+
+
+    <script src="https://unpkg.com/leaflet@1.3.4/dist/leaflet.js" integrity="sha512-nMMmRyTVoLYqjP9hrbed9S+FzjZHW5gY1TWCHA5ckwXZBadntCNs8kEqAWdrb9O7rxbCaA4lKTIWjDXZxflOcA=="
+        crossorigin=""></script>
+    <script>
+
+        let botao = document.querySelector("#barra");
+        let lateral = document.querySelector("aside");
+
+
+        // // criando o botao direto na função
+        botao.onclick = function () {
+            lateral.classList.toggle('mostrando');
+            for (item of lateral.children) {
+                if (item.id !== "barra") {
+                    item.classList.toggle("invisivel");
+                }
+            }
+            for (item of botao.children) {
+                item.classList.toggle('mostrando');
+            }
+        }
+
+        var mymap = L.map('mapa').setView([-23.558016, -46.661706099999996], 18);
+
+        L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+            attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+            maxZoom: 18,
+            id: 'mapbox.streets',
+            accessToken: 'pk.eyJ1IjoiamVubmljb3N0YSIsImEiOiJjam9ya3o1bmYwMGdyM2tzZmw5OTJrcXNlIn0.1xohWXdtQGHiATVrtaJevw'
+        }).addTo(mymap);
+
+        L.marker([-23.558016, -46.661706099999996]).addTo(mymap)
+            .bindPopup('Sua localização')
+            .openPopup();
+
+    </script>
+</body>
+
+</html>
